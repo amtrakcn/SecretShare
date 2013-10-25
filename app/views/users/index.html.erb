@@ -4,33 +4,51 @@
   <li><%= user.username %>
     <!-- <%= render "friendships/form", user: user%> -->
     <% if can_friend?(user) %>
-      <button class="friend" data-id="<%= user.id %>">add friend</button>
+      <button class="friend-add" data-id="<%= user.id %>">add friend</button>
+    <% elsif can_unfriend?(user) %>
+      <button class="friend-remove" data-id="<%= user.id %>">remove friend</button>
     <% end %>
   </li>
 
   <% end %>
 
   <script>
-  $("button.friend").on("click", function(event) {
-    event.preventDefault();
+    $("button.friend-add").on("click", function(event) {
+      event.preventDefault();
 
-    var element = $(event.target);
-    element.text("Friending...")
+      var element = $(event.target);
+      element.text("Friending...");
 
-    var id = element.attr("data-id")
+      var id = element.attr("data-id");
 
-    $.ajax({
-      url: "/users/" + id + "/friendship",
-      type: "post",
-      data: {},
-      success: function() {
-        element.prop("disabled", true);
-        element.remove();
-      },
-      error: function(jqXHR, status, errorThrown) {
-        alert(status);
-      }
-    })
-  });
+      $.ajax({
+        url: "/users/" + id + "/friendship",
+        type: "post",
+        data: {},
+        success: function() {
+          element.prop("disabled", true);
+          element.remove();
+        }
+      })
+    });
+
+    $("button.friend-remove").on("click", function(event) {
+      event.preventDefault();
+
+      var element = $(event.target);
+      element.text("Unfriending...");
+
+      var id = element.attr("data-id");
+
+      $.ajax({
+        url: "/users/" + id + "/friendship",
+        type: "delete",
+        data: {},
+        success: function() {
+          element.prop("disabled", true);
+          element.remove();
+        }
+      })
+    });
   </script>
 </ul>
