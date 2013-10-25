@@ -18,9 +18,12 @@ class UsersController < ApplicationController
   end
 
   def show
+    @secret = Secret.new()
     if params.include?(:id)
       @user = User.find(params[:id])
+      @secret.recipient_id = @user.id
     else
+      @secret.recipient_id = current_user.id
       redirect_to user_url(current_user)
     end
   end

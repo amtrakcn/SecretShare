@@ -3,11 +3,10 @@
 
   <li><%= user.username %>
     <!-- <%= render "friendships/form", user: user%> -->
-    <% if can_friend?(user) %>
+    <div class="friend-buttons <%= situation(user) %>">
       <button class="friend-add" data-id="<%= user.id %>">add friend</button>
-    <% elsif can_unfriend?(user) %>
       <button class="friend-remove" data-id="<%= user.id %>">remove friend</button>
-    <% end %>
+    </div>
   </li>
 
   <% end %>
@@ -17,7 +16,6 @@
       event.preventDefault();
 
       var element = $(event.target);
-      element.text("Friending...");
 
       var id = element.attr("data-id");
 
@@ -26,8 +24,8 @@
         type: "post",
         data: {},
         success: function() {
-          element.prop("disabled", true);
-          element.remove();
+          $("div.friend-buttons").toggleClass("can-friend", false)
+          $("div.friend-buttons").toggleClass("can-unfriend", true)
         }
       })
     });
@@ -36,7 +34,6 @@
       event.preventDefault();
 
       var element = $(event.target);
-      element.text("Unfriending...");
 
       var id = element.attr("data-id");
 
@@ -45,8 +42,8 @@
         type: "delete",
         data: {},
         success: function() {
-          element.prop("disabled", true);
-          element.remove();
+          $("div.friend-buttons").toggleClass("can-unfriend", false)
+          $("div.friend-buttons").toggleClass("can-friend", true)
         }
       })
     });
