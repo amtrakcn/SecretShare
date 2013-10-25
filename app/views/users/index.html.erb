@@ -1,0 +1,9 @@
+<ul>
+  <% User.all.each do |user| %>
+
+  <li><%= user.username %>
+    <%= render "friendships/form", user: user%>
+  </li>
+
+  <% end %>
+</ul>

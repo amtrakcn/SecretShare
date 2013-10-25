@@ -12,6 +12,13 @@ group :development do
   gem 'pry-rails'
 end
 
+group :development, :test do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'debugger'
+  gem 'meta_request'
+end
+
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jquery-rails'
 gem 'pg'
