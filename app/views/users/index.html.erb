@@ -2,8 +2,35 @@
   <% User.all.each do |user| %>
 
   <li><%= user.username %>
-    <%= render "friendships/form", user: user%>
+    <!-- <%= render "friendships/form", user: user%> -->
+    <% if can_friend?(user) %>
+      <button class="friend" data-id="<%= user.id %>">add friend</button>
+    <% end %>
   </li>
 
   <% end %>
+
+  <script>
+  $("button.friend").on("click", function(event) {
+    event.preventDefault();
+
+    var element = $(event.target);
+    element.text("Friending...")
+
+    var id = element.attr("data-id")
+
+    $.ajax({
+      url: "/users/" + id + "/friendship",
+      type: "post",
+      data: {},
+      success: function() {
+        element.prop("disabled", true);
+        element.remove();
+      },
+      error: function(jqXHR, status, errorThrown) {
+        alert(status);
+      }
+    })
+  });
+  </script>
 </ul>

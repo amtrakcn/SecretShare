@@ -1,6 +1,10 @@
 class Friendship < ActiveRecord::Base
   attr_accessible :out_friend_id, :in_friend_id
 
+  validate do
+    !Friendship.exists?(out_friend_id: out_friend_id, in_friend_id: in_friend_id)
+  end
+
   belongs_to :out_friend,
     class_name: "User",
     foreign_key: :out_friend_id,
