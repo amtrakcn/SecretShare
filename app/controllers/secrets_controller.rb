@@ -8,7 +8,8 @@ class SecretsController < ApplicationController
     @secret = current_user.authored_secrets.build(params[:secret])
 
     if @secret.save
-      render :json => @secret
+      tags = @secret.tags.map { |tag| tag.name }
+      render :json => [@secret, tags]
     else
       render :json => @secret.errors.full_messages
     end
