@@ -1,4 +1,3 @@
-<!-- <script type="text/javascript" src="jquery.serializeJSON.min.js"></script> -->
 <h1><%= @user.username %></h1>
 
 <h2>Secrets</h2>
@@ -15,22 +14,3 @@
 <div>
   <%= render "/secrets/form" %>
 </div>
-
-<script>
-// $("#submit-new-secret").on("click", function(event){
-//   event.preventDefault();
-//   submissionForm = event.target.parentElement
-//   $.ajax({
-//     url: "/secrets",
-//     type: "post",
-//     data: $(submissionForm).serializeJSON(),
-//     success: function(newSecret){
-//       var secretToAdd = $("<li></li>")
-//       secretToAdd.text(newSecret.title);
-//       $("#secretsList").prepend(secretToAdd);
-//     }
-//   })
-//
-// })
-
-</script>

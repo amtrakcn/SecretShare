@@ -9,9 +9,9 @@ class SecretsController < ApplicationController
 
     if @secret.save
       tags = @secret.tags.map { |tag| tag.name }
-      render :json => [@secret, tags]
+      render :json => { data: [@secret, tags] }
     else
-      render :json => @secret.errors.full_messages
+      render :json => { errors: @secret.errors.full_messages }
     end
   end
 end
